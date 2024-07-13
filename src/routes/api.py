@@ -11,10 +11,12 @@ async def index() -> Response:
     content = {'message': 'Hello World'}
     return HttpResponse(status_code=StatusCode.OK, content=content).json()
 
+
 @router.post('/vowel_count', tags=['Counts vowels in words'])
 async def vowel_count() -> Response:
     content = {'message': 'Counts vowels in words'}
     return HttpResponse(status_code=StatusCode.OK, content=content).json()
+
 
 @router.post('/sort', tags=['Order words'])
 async def order_words() -> Response:

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Response
 
 from src.helpers.http_response import HttpResponse
 from src.helpers.status_code import StatusCode
+from src.schemas.vowel_count import VowelCount
 
 router = APIRouter(prefix="/api")
 
@@ -13,7 +14,8 @@ async def index() -> Response:
 
 
 @router.post('/vowel_count', tags=['Counts vowels in words'])
-async def vowel_count() -> Response:
+async def vowel_count(body: VowelCount) -> Response:
+    print(body.words)
     content = {'message': 'Counts vowels in words'}
     return HttpResponse(status_code=StatusCode.OK, content=content).json()
 

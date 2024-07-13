@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+    image: pilar/python:3.12
+    container_name: pilar-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    volumes:
+      - .:/code

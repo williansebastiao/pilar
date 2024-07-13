@@ -6,6 +6,7 @@ from src.helpers.status_code import StatusCode
 from src.schemas.vowel_count_schema import VowelCountSchema
 from src.schemas.sort_schema import SortSchema
 from src.services.vowel_count_services import VowelCountServices
+from src.services.sort_services import SortServices
 
 router = APIRouter(prefix="/api")
 
@@ -25,5 +26,6 @@ async def vowel_count(body: VowelCountSchema) -> JSONResponse:
 
 @router.post('/sort', tags=['Order words'])
 async def order_words(body: SortSchema) -> JSONResponse:
-    content = {'message': 'Order words'}
+    sort_services = SortServices()
+    content = sort_services.sort(body)
     return HttpResponse(status_code=StatusCode.OK, content=content).json()

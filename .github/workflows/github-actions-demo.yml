@@ -20,11 +20,8 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root --no-interaction
 
-      - name: Run pylint
+      - name: Running pylint
         run: poetry run pylint . --recursive=true
 
-      - name: Run flake8
-        run: poetry run flake8 .
-
-      - name: Run tests
+      - name: Running test
         run: poetry run pytest

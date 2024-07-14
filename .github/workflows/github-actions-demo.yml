@@ -20,13 +20,11 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root --no-interaction
 
-      - name: Build Docker image
-        run: |
-          docker build -t pilar-app .
-          docker tag pilar-app:latest pilar-app:$(git rev-parse --short ${{ github.sha }})
+      - name: Run pylint
+        run: poetry run pylint . --recursive=true
 
-      - name: Run linting
-        run: docker run --rm pilar-app make lint
+      - name: Run flake8
+        run: poetry run flake8 .
 
       - name: Run tests
-        run: docker run --rm pilar-app make test
+        run: poetry run pytest

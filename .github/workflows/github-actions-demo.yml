@@ -1,14 +1,14 @@
-name: GitHub Actions Workflow
+name: CI/CD Pilar
 on: [push]
 jobs:
-  pilar:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v2
         with:
           python-version: 3.12
 
@@ -18,13 +18,15 @@ jobs:
           poetry --version
 
       - name: Install dependencies
-        run: poetry install --no-root
+        run: poetry install --no-root --no-interaction
 
-      - name: Build
-        run: docker build -t pilar-app .
+      - name: Build Docker image
+        run: |
+          docker build -t pilar-app .
+          docker tag pilar-app:latest pilar-app:$(git rev-parse --short ${{ github.sha }})
 
-      - name: Lint
+      - name: Run linting
         run: docker run --rm pilar-app make lint
 
-      - name: Test
+      - name: Run tests
         run: docker run --rm pilar-app make test

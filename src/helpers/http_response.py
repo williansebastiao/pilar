@@ -1,7 +1,7 @@
 import json
 from fastapi.responses import JSONResponse
 
-from src.helpers.status_code import StatusCode
+from src.helpers.enums import StatusCode
 
 
 class HttpResponse:

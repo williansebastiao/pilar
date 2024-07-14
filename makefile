@@ -3,7 +3,7 @@ SHELL := /bin/bash
 DOCKER_COMPOSE := docker-compose
 POETRY := poetry run
 
-.PHONY: help start build stop container
+.PHONY: help start build stop container pytest
 
 help:
 	@echo "Pilar Makefile"
@@ -24,3 +24,6 @@ stop: ## Stop all containers
 
 container: ## Enter the container
 	docker exec -it pilar-app bash
+
+pytest: ## Enter the container and run pytest
+	docker exec pilar-app poetry run pytest

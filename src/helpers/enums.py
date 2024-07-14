@@ -1,4 +1,5 @@
 from enum import Enum
+
 from fastapi import status
 
 
@@ -11,5 +12,5 @@ class StatusCode(Enum):
 
 
 class Filters(Enum):
-    ASCENDING = 'asc'
-    DESCENDING = 'desc'
+    ASCENDING = "asc"
+    DESCENDING = "desc"

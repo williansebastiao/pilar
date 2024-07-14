@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
@@ -12,7 +12,11 @@ app.include_router(api_router)
 
 
 @app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
+async def validation_exception_handler(
+    request: Request, exc: RequestValidationError
+) -> JSONResponse:
     errors = exc.errors()
-    content = {"detail": errors[0]['msg']}
-    return HttpResponse(status_code=StatusCode.UNPROCESSABLE_ENTITY, content=content).json()
+    content = {"detail": errors[0]["msg"]}
+    return HttpResponse(
+        status_code=StatusCode.UNPROCESSABLE_ENTITY, content=content
+    ).json()

@@ -1,4 +1,3 @@
-import json
 from fastapi.responses import JSONResponse
 
 from src.helpers.enums import StatusCode
@@ -6,7 +5,9 @@ from src.helpers.enums import StatusCode
 
 class HttpResponse:
 
-    def __init__(self, status_code: int = StatusCode.OK, content: dict = []):
+    def __init__(self, status_code: int = StatusCode.OK, content: dict = None):
+        if content is None:
+            content = []
         self.status_code = status_code
         self.content = content
 

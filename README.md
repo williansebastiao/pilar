@@ -9,6 +9,15 @@ Este teste visa identificar a lógica aplicada no desenvolvimento das soluções
 - [Docker](https://www.docker.com/)
 
 
+## Variáveis de Ambiente
+
+Para rodar esse projeto, você vai precisar renomar o arquivo .env.example para .env.
+
+```
+cp .env.example .env
+```
+
+
 ## Instalação
 
 Para realizar a instalação, execute os seguintes comandos:

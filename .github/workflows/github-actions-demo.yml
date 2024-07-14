@@ -4,6 +4,7 @@ on:
     types: [closed]
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,3 +30,10 @@ jobs:
 
       - name: Running test
         run: poetry run pytest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to server
+        run:  echo "Ghost deploy finished"

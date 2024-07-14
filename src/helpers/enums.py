@@ -8,3 +8,8 @@ class StatusCode(Enum):
     BAD_REQUEST = status.HTTP_400_BAD_REQUEST
     NOT_FOUND = status.HTTP_404_NOT_FOUND
     UNPROCESSABLE_ENTITY = status.HTTP_422_UNPROCESSABLE_ENTITY
+
+
+class Filters(Enum):
+    ASCENDING = 'asc'
+    DESCENDING = 'desc'

@@ -1,31 +1,29 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
+from src.helpers.enums import StatusCode
 from src.helpers.http_response import HttpResponse
-from src.helpers.status_code import StatusCode
-from src.schemas.vowel_count_schema import VowelCountSchema
-from src.schemas.sort_schema import SortSchema
-from src.services.vowel_count_services import VowelCountServices
-from src.services.sort_services import SortServices
+from src.schemas.words_schema import VowelCountSchema, SortSchema
+from src.services.word_services import WordServices
 
 router = APIRouter(prefix="/api")
 
 
-@router.get('/', tags=['Health Check'])
+@router.get('/', tags=['Health check'])
 async def index() -> JSONResponse:
-    content = {'message': "It's running..."}
+    content = {'detail': "It's running..."}
     return HttpResponse(status_code=StatusCode.OK, content=content).json()
 
 
-@router.post('/vowel_count', tags=['Counts vowels in words'])
+@router.post('/words/vowel_count', tags=['Words'])
 async def vowel_count(body: VowelCountSchema) -> JSONResponse:
-    vowel_count_services = VowelCountServices()
-    content = vowel_count_services.vowel_count(body.words)
+    services = WordServices()
+    content = services.vowel_count(body.words)
     return HttpResponse(status_code=StatusCode.OK, content=content).json()
 
 
-@router.post('/sort', tags=['Order words'])
+@router.post('/words/sort', tags=['Words'])
 async def order_words(body: SortSchema) -> JSONResponse:
-    sort_services = SortServices()
-    content = sort_services.sort(body)
+    services = WordServices()
+    content = services.sort(body)
     return HttpResponse(status_code=StatusCode.OK, content=content).json()

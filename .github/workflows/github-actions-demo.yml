@@ -1,7 +1,7 @@
 name: GitHub Actions Workflow
 on: [push]
 jobs:
-  Build-Lint-Test:
+  pilar:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -21,10 +21,10 @@ jobs:
         run: poetry install --no-root
 
       - name: Build
-        run: make start
+        run: docker build -t pilar-app .
 
       - name: Lint
-        run: make lint
+        run: docker run --rm pilar-app make lint
 
       - name: Test
-        run: make test
+        run: docker run --rm pilar-app make test

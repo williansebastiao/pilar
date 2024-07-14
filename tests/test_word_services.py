@@ -1,6 +1,7 @@
 import pytest
 from fastapi.exceptions import HTTPException
 from pydantic import ValidationError
+
 from src.helpers.enums import StatusCode
 from src.schemas.words_schema import SortSchema
 from src.services.word_services import WordServices
@@ -55,6 +56,7 @@ def test_should_return_list_sorted_as_desc():
     service = WordServices()
     response = service.sort(my_dict)
     assert response == sorted_dict
+
 
 def test_not_should_return_list_sorted_if_has_int():
     my_dict = {"words": ["batman", "robin", "coringa", 1], "order": "asc"}

@@ -3,7 +3,7 @@ SHELL := /bin/bash
 DOCKER_COMPOSE := docker-compose
 POETRY := poetry run
 
-.PHONY: help start build stop container pytest
+.PHONY: help start build stop container flake8 black isort autoflake pylint pytest
 
 help:
 	@echo "Pilar Makefile"
@@ -24,6 +24,21 @@ stop: ## Stop all containers
 
 container: ## Enter the container
 	docker exec -it pilar-app bash
+
+flake: ## Run flake8
+	poetry run flake8 .
+
+black: ## Run black
+	poetry run black .
+
+isort: ## Run isort
+	poetry run isort .
+
+autoflake: ## Run autoflake
+	poetry run autoflake .
+
+pylint: ## Run pylint
+	poetry run pylint .  --recursive=true
 
 pytest: ## Enter the container and run pytest
 	docker exec pilar-app poetry run pytest

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 from typing import List
 
 from src.helpers.enums import Filters
@@ -7,7 +7,7 @@ from src.helpers.enums import Filters
 class VowelCountSchema(BaseModel):
     words: List[str]
 
-    @validator('words')
+    @field_validator('words')
     def check_words(cls, v):
         if not v:
             raise ValueError('words must not be empty')

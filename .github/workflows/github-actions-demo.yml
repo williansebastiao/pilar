@@ -1,11 +1,9 @@
 name: CI/CD Pilar
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - main
-      - '*'
-    branches-ignore:
-      - '!main'
 jobs:
   build:
     runs-on: ubuntu-latest

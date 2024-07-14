@@ -20,6 +20,9 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root
 
+      - name: Build
+        run: make start
+
       - name: Lint
         run: make lint
 

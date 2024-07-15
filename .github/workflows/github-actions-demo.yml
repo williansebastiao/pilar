@@ -1,7 +1,6 @@
 name: CI/CD Pilar
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
 
@@ -78,8 +77,8 @@ jobs:
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ssh root@45.79.212.56
-          key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDH4QRocx83ZY8Lp/00JHnMvwM6g18hvrO1TLGIqmOL1Yi0kVhbEX7n823BhIrJTy4vioP6/0QHgOOGhgXddAxN4zy+pLL/a5sNVkvk8UgGjg74WVaUh5GXWr5mpbLtgE6Wq9lAYi09TD/RqlONFPYXbeHn/YEDBbmWEse8Ly5BatuN4n2NM3xYiYh68MFWD6NlZQB4J1ftAHVRM/4Yhe/opxfNksHeMgLLVeRM3ijVAouw8ufQwdm8tLFKn7/999FhkJmp5DvZBVUeYoo98UQoq+MtK2F+aVBb0jfns+8qjmQgiTbu0N87mZKrn5qHAOH1qes8mNzU5QSKkts+2jJRA3OJmIxZC5LzbWVVahQJAKJCTdi5SJsSIUYcqe7chRPDKqzB6rhWGD8VypCS5ngOxCfgGIWXl2m3QqXuWUWdGtG6i/4iuPjzdVoZvJ1SD8DSaEEseOTlKD6WjupTOXKBNI0XzVkhQOufAD/75ZJvCqdzORBU101gbsmY6Y6Tglc= root@localhost
+          host: "ssh root@45.79.212.56"
+          key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDH4QRocx83ZY8Lp/00JHnMvwM6g18hvrO1TLGIqmOL1Yi0kVhbEX7n823BhIrJTy4vioP6/0QHgOOGhgXddAxN4zy+pLL/a5sNVkvk8UgGjg74WVaUh5GXWr5mpbLtgE6Wq9lAYi09TD/RqlONFPYXbeHn/YEDBbmWEse8Ly5BatuN4n2NM3xYiYh68MFWD6NlZQB4J1ftAHVRM/4Yhe/opxfNksHeMgLLVeRM3ijVAouw8ufQwdm8tLFKn7/999FhkJmp5DvZBVUeYoo98UQoq+MtK2F+aVBb0jfns+8qjmQgiTbu0N87mZKrn5qHAOH1qes8mNzU5QSKkts+2jJRA3OJmIxZC5LzbWVVahQJAKJCTdi5SJsSIUYcqe7chRPDKqzB6rhWGD8VypCS5ngOxCfgGIWXl2m3QqXuWUWdGtG6i/4iuPjzdVoZvJ1SD8DSaEEseOTlKD6WjupTOXKBNI0XzVkhQOufAD/75ZJvCqdzORBU101gbsmY6Y6Tglc= root@localhost"
           script: |
             cd /var/www/app
             make stop

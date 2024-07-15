@@ -17,6 +17,7 @@ autopep8 = "^2.3.1"
 black = "^24.4.2"
 isort = "^5.13.2"
 autoflake = "^2.3.1"
+pre-commit = "^3.7.1"
 
 [tool.black]
 line-length = 88

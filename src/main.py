@@ -5,9 +5,11 @@ from fastapi.responses import JSONResponse
 from src.helpers.enums import StatusCode
 from src.helpers.http_response import HttpResponse
 from src.routes.api import router as api_router
+from src.routes.web import router as web_router
 
 app = FastAPI(title="Pilar")
 
+app.include_router(web_router)
 app.include_router(api_router)
 
 

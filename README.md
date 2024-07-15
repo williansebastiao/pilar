@@ -42,4 +42,3 @@ Para explorar a documentação da API, acesse a seguinte URL:
 ## Postman
 
 Dentro do projeto existe um arquivo chamado *Pilar.postman_collection.json* importe para o postman, dessa forma terá todos os endpoints disponíveis.
-

@@ -4,7 +4,6 @@ from src.helpers.enums import StatusCode
 
 
 class HttpResponse:
-
     def __init__(self, status_code: int = StatusCode.OK, content: dict = None):
         if content is None:
             content = []

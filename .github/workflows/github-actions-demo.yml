@@ -5,44 +5,66 @@ on:
       - main
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
+    outputs:
+      python-version: ${{ steps.python.outputs.python-version }}
+      poetry-version: ${{ steps.poetry.outputs.poetry-version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Set up Python 3.12
+        id: python
         uses: actions/setup-python@v2
         with:
           python-version: 3.12
 
       - name: Install Poetry
+        id: poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
-          poetry --version
+          echo "poetry-version=$(poetry --version)" >> $GITHUB_ENV
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/pypoetry
+            ~/.virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
 
       - name: Install dependencies
         run: poetry install --no-root --no-interaction
 
   lint:
-    needs: build
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Python 3.12
+      - name: Use Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.12
+          python-version: ${{ needs.setup.outputs.python-version }}
 
       - name: Install Poetry
         run: |
-          curl -sSL https://install.python-poetry.org | python3 -
+          echo "${{ needs.setup.outputs.poetry-version }}"
           poetry --version
 
-      - name: Install dependencies
-        run: poetry install --no-root --no-interaction
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/pypoetry
+            ~/.virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
 
       - name: Running pylint
         run: poetry run pylint . --recursive=true
@@ -54,18 +76,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Python 3.12
+      - name: Use Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.12
+          python-version: ${{ needs.setup.outputs.python-version }}
 
       - name: Install Poetry
         run: |
-          curl -sSL https://install.python-poetry.org | python3 -
+          echo "${{ needs.setup.outputs.poetry-version }}"
           poetry --version
 
-      - name: Install dependencies
-        run: poetry install --no-root --no-interaction
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/pypoetry
+            ~/.virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
 
       - name: Running test
         run: poetry run pytest

@@ -11,7 +11,7 @@ router = APIRouter(prefix="/api")
 
 @router.get("/", tags=["Health check"])
 async def index() -> JSONResponse:
-    content = {"detail": "It's running..."}
+    content = {"detail": "It's running... let's rock!"}
     return HttpResponse(status_code=StatusCode.OK, content=content).json()
 
 

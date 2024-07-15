@@ -1,7 +1,6 @@
 name: CI/CD Pilar
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
 
@@ -25,31 +24,64 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root --no-interaction
 
-  Lint:
+  lint:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          poetry --version
+
+      - name: Install dependencies
+        run: poetry install --no-root --no-interaction
+
       - name: Running pylint
         run: poetry run pylint . --recursive=true
 
-  Test:
-    needs: build
+  test:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          poetry --version
+
+      - name: Install dependencies
+        run: poetry install --no-root --no-interaction
+
       - name: Running test
         run: poetry run pytest
 
   deploy:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd /var/www/app
+            cd /var/www/app/pilar
             make stop
-            git pull
+            git pull origin main
             make start

@@ -3,7 +3,7 @@ SHELL := /bin/bash
 DOCKER_COMPOSE := docker-compose
 POETRY := poetry run
 
-.PHONY: help start build stop container flake8 black isort autoflake pylint pytest
+.PHONY: help start build stop container flake8 black isort autoflake pylint pytest pre-commit pre-commit-install
 
 help:
 	@echo "Pilar Makefile"
@@ -42,3 +42,9 @@ pylint: ## Run pylint
 
 pytest: ## Enter the container and run pytest
 	docker exec pilar-app poetry run pytest
+
+pre-commit: ## Running pre-commit
+	poetry run pre-commit run --all-files
+
+pre-commit-install: ## Install pre-commit
+	poetry run pre-commit install --allow-missing-config

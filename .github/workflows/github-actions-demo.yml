@@ -25,9 +25,17 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root --no-interaction
 
+  Lint:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Running pylint
         run: poetry run pylint . --recursive=true
 
+  Test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Running test
         run: poetry run pytest
 
@@ -35,5 +43,13 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to server
-        run:  echo "Ghost deploy finished"
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/app
+            make stop
+            git pull
+            make start

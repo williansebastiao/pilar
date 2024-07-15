@@ -81,7 +81,7 @@ jobs:
           username: root
           password: "#!Wi17LL18Ians19#!"
           script: |
-            cd /var/www/app
+            cd /var/www/app/pilar
             make stop
             git pull
             make start

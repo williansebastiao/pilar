@@ -77,8 +77,9 @@ jobs:
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
-          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.HOST }}
+          username: root
+          password: "#!Wi17LL18Ians19#!"
           script: |
             cd /var/www/app
             make stop
